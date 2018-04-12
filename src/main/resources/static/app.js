@@ -618,7 +618,7 @@ function displayCards(message, method) {
         var cardNameForId = message[i].name + i;
         if (cName.includes(" ")) {
             cardName = cardName.replace(/\s/g, '_');
-        } else if (cName === "Battle-ax") {
+        } else if (cName === "battle-ax") {
             cardName = "/images/battle_ax.png";
         }
         //$("#cards").append("<td>" + "<img name='"+i+"' id='"+(message[i].name+i)+"' class='cardImg' height='190' width='133' alt='Card image cap' src='"+cardName+"'>" + "</td>");
