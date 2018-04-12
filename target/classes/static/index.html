@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hello WebSocket</title>
+    <link href="/bootstrap.min.css" rel="stylesheet">
+    <link href="/main.css" rel="stylesheet">
+    <link href="fontawesome.min.css" rel="stylesheet">
+    <link href="/confirmbox.css" rel="stylesheet">
+    <script src="/jquery-1.10.2.min.js"></script>
+    <script src="/jquery-ui.js"></script>
+    <script src="/app.js"></script>
+    <script src="/toastr.min.js"></script>
+    <link href="toastr.min.css" rel="stylesheet" />
+</head>
+<body onload="pageLoaded()">
+<noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies on Javascript being
+    enabled. Please enable
+    Javascript and reload this page!</h2></noscript>
+<div class="modal"><!-- Place at bottom of page --></div>
+
+<div id="main-content" class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <table id="players" class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Players online:</th>
+                </tr>
+                </thead>
+                <tbody id="individualPlayer">
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div id="createGameButtons" align="center">
+        <button id="createGame" type="button" onclick="gameSettings()"> Create Game</button>
+    </div>
+    <div class="row" id="gameRoomsHtml">
+        <div class="col-md-12">
+            <table id="gameRooms" class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Gamerooms available:</th>
+                    <th># of Players</th>
+                </tr>
+                </thead>
+                <tbody id="individualGameRoom">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
