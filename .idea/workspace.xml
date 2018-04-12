@@ -1,41 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f2706209-d8f8-455d-9590-cf633c739cac" name="Default" comment="Deploy">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="f2706209-d8f8-455d-9590-cf633c739cac" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/system.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/devglan/config/Application.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/devglan/config/SocketHandler$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/devglan/config/SocketHandler.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/devglan/config/WebSocketConfig.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/model/AIPlayer.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/model/AIStrategy.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/model/Adventure.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/model/Ally.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/model/Amour.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/model/Card.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/model/CommonStrategy$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/model/CommonStrategy$2.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/model/CommonStrategy.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/model/Event.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/model/Foe.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/model/GameBoard$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/model/GameBoard$2.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/model/GameBoard$3.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/model/GameBoard$4.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/model/GameBoard$5.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/model/GameBoard.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/model/Player.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/model/Quest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/model/Story.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/model/Strategy2$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/model/Strategy2$2.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/model/Strategy2$3.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/model/Strategy2.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/model/Test.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/model/Tournament.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/model/Weapon.class" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -139,11 +107,29 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="true">
+      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="287">
-              <caret line="38" column="24" selection-start-line="38" selection-start-column="24" selection-end-line="38" selection-end-column="24" />
+            <state relative-caret-position="421">
+              <caret line="47" column="18" lean-forward="true" selection-start-line="47" selection-start-column="18" selection-end-line="47" selection-end-column="18" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="system.properties" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/system.properties">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret column="26" selection-start-column="26" selection-end-column="26" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AIStrategy.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/model/AIStrategy.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="30">
+              <caret line="2" selection-start-line="2" selection-end-line="2" />
             </state>
           </provider>
         </entry>
@@ -157,15 +143,6 @@
                 <element signature="e#1746#1747#0" expanded="true" />
                 <element signature="e#1780#1781#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/resources/static/index.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-78">
-              <caret line="12" column="51" selection-start-line="12" selection-start-column="51" selection-end-line="12" selection-end-column="51" />
             </state>
           </provider>
         </entry>
@@ -215,6 +192,8 @@
         <option value="$PROJECT_DIR$/src/main/java/model/GameBoard.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/devglan/config/SocketHandler.java" />
         <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/model/AIStrategy.java" />
+        <option value="$PROJECT_DIR$/system.properties" />
       </list>
     </option>
   </component>
@@ -274,22 +253,6 @@
               <item name="3004" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="config" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="spring-websocket-without-stomp" type="b2602c69:ProjectViewProjectNode" />
-              <item name="3004" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="model" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="spring-websocket-without-stomp" type="b2602c69:ProjectViewProjectNode" />
-              <item name="3004" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -334,7 +297,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.Application">
+  <component name="RunManager" selected="Heroku Deployment.Unnamed">
     <configuration default="true" type="Application" factoryName="Application">
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
     </configuration>
@@ -413,7 +376,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1523444003633</updated>
-      <workItem from="1523444009125" duration="45348000" />
+      <workItem from="1523444009125" duration="45879000" />
     </task>
     <task id="LOCAL-00001" summary="Deploy">
       <created>1523502082126</created>
@@ -429,11 +392,18 @@
       <option name="project" value="LOCAL" />
       <updated>1523502603996</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Deploy">
+      <created>1523504356581</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1523504356581</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="45348000" />
+    <option name="totallyTimeSpent" value="45879000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1920" height="974" extended-state="0" />
@@ -441,7 +411,7 @@
     <layout>
       <window_info anchor="right" id="Palette" order="6" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info anchor="bottom" id="Application Servers" order="0" />
+      <window_info anchor="bottom" id="Application Servers" order="0" visible="true" />
       <window_info anchor="right" id="Maven Projects" order="0" />
       <window_info anchor="bottom" id="Database Changes" order="5" show_stripe_button="false" />
       <window_info id="Capture Tool" order="7" />
@@ -452,7 +422,7 @@
       <window_info id="UI Designer" order="2" />
       <window_info anchor="bottom" id="Debug" order="11" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="14" />
-      <window_info anchor="bottom" id="Messages" order="3" visible="true" weight="0.3288889" />
+      <window_info anchor="bottom" id="Messages" order="3" weight="0.3288889" />
       <window_info anchor="right" id="Palette&#9;" order="3" />
       <window_info id="Image Layers" order="1" />
       <window_info anchor="bottom" id="Java Enterprise" order="4" />
@@ -603,10 +573,24 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/model/AIStrategy.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" selection-start-line="2" selection-end-line="2" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="287">
-          <caret line="38" column="24" selection-start-line="38" selection-start-column="24" selection-end-line="38" selection-end-column="24" />
+        <state relative-caret-position="421">
+          <caret line="47" column="18" lean-forward="true" selection-start-line="47" selection-start-column="18" selection-end-line="47" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/system.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="26" selection-start-column="26" selection-end-column="26" />
         </state>
       </provider>
     </entry>
