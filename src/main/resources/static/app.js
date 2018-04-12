@@ -91,7 +91,7 @@ function pageLoaded(){
 
     }
     var data = JSON.stringify({'method':'newPlayer','body': name})
-    ws = new WebSocket('ws://localhost:8091/game');
+    ws = new WebSocket('https://spring-websocket-without-stomp.herokuapp.com/game');
     ws.onmessage = function(data){
         selectedCards = false;
         cardsSelectedToBePlayed = [];

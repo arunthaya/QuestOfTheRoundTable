@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="f2706209-d8f8-455d-9590-cf633c739cac" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/system.properties" beforeDir="false" afterPath="$PROJECT_DIR$/system.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/app.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -15,15 +15,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="WebSocketConfig.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/devglan/config/WebSocketConfig.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="9" column="61" selection-start-line="9" selection-start-column="61" selection-end-line="9" selection-end-column="61" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="SocketHandler.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/devglan/config/SocketHandler.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -90,11 +81,47 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="system.properties" pinned="false" current-in-tab="true">
+      <file leaf-file-name="system.properties" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/system.properties">
           <provider selected="true" editor-type-id="text-editor">
             <state>
-              <caret column="30" selection-start-column="30" selection-end-column="30" />
+              <caret column="30" lean-forward="true" selection-start-column="30" selection-end-column="30" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="app.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/static/app.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="242">
+              <caret line="93" column="77" selection-start-line="93" selection-start-column="77" selection-end-line="93" selection-end-column="77" />
+              <folding>
+                <element signature="n#style#0;n#button#0;n#td#0;n#tr#1;n#table#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#button#1;n#td#0;n#tr#1;n#table#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#button#2;n#td#0;n#tr#1;n#table#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#button#0;n#td#0;n#tr#3;n#table#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#button#1;n#td#0;n#tr#3;n#table#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#button#2;n#td#0;n#tr#3;n#table#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#button#0;n#td#0;n#tr#5;n#table#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#button#1;n#td#0;n#tr#5;n#table#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#button#2;n#td#0;n#tr#5;n#table#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#button#0;n#td#0;n#tr#7;n#table#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#button#1;n#td#0;n#tr#7;n#table#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#button#2;n#td#0;n#tr#7;n#table#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#button#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#img#0;n#td#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#img#0;n#td#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#img#0;n#td#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#img#0;n#td#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -176,7 +203,6 @@
         <option value="$PROJECT_DIR$/src/main/resources/static/index.html" />
         <option value="$PROJECT_DIR$/src/main/java/model/Player.java" />
         <option value="$PROJECT_DIR$/src/main/resources/static/main.css" />
-        <option value="$PROJECT_DIR$/src/main/resources/static/app.js" />
         <option value="$PROJECT_DIR$/src/main/java/model/AIStrategy.java" />
         <option value="$PROJECT_DIR$/src/main/java/model/Pair.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/devglan/config/SocketHandler.java" />
@@ -185,6 +211,7 @@
         <option value="$PROJECT_DIR$/src/main/resources/application.properties" />
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/system.properties" />
+        <option value="$PROJECT_DIR$/src/main/resources/static/app.js" />
       </list>
     </option>
   </component>
@@ -201,7 +228,7 @@
       </MavenImportingSettings>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" fullScreen="true">
     <option name="x" value="221" />
     <option name="y" value="32" />
     <option name="width" value="1920" />
@@ -222,6 +249,47 @@
             <path>
               <item name="spring-websocket-without-stomp" type="b2602c69:ProjectViewProjectNode" />
               <item name="3004" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="spring-websocket-without-stomp" type="b2602c69:ProjectViewProjectNode" />
+              <item name="3004" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="spring-websocket-without-stomp" type="b2602c69:ProjectViewProjectNode" />
+              <item name="3004" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="spring-websocket-without-stomp" type="b2602c69:ProjectViewProjectNode" />
+              <item name="3004" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="spring-websocket-without-stomp" type="b2602c69:ProjectViewProjectNode" />
+              <item name="3004" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="model" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="spring-websocket-without-stomp" type="b2602c69:ProjectViewProjectNode" />
+              <item name="3004" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="spring-websocket-without-stomp" type="b2602c69:ProjectViewProjectNode" />
+              <item name="3004" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -339,7 +407,7 @@
       <workItem from="1523508901800" duration="530000" />
       <workItem from="1523509444427" duration="100000" />
       <workItem from="1523509550868" duration="50000" />
-      <workItem from="1523509607265" duration="401000" />
+      <workItem from="1523509607265" duration="716000" />
     </task>
     <task id="LOCAL-00001" summary="Deploy">
       <created>1523502082126</created>
@@ -425,19 +493,26 @@
       <option name="project" value="LOCAL" />
       <updated>1523509688045</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Deploy">
+      <created>1523510032830</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1523510032830</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="50641000" />
+    <option name="totallyTimeSpent" value="50956000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="221" y="32" width="1920" height="1057" extended-state="0" />
+    <frame x="0" y="0" width="1920" height="1080" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="6" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info anchor="bottom" id="Application Servers" order="0" visible="true" weight="0.30213633" />
+      <window_info anchor="bottom" id="Application Servers" order="0" visible="true" weight="0.2889105" />
       <window_info anchor="right" id="Maven Projects" order="0" />
       <window_info anchor="bottom" id="Database Changes" order="5" show_stripe_button="false" />
       <window_info id="Capture Tool" order="7" />
@@ -818,42 +893,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/static/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="413">
-          <caret line="81" column="22" selection-start-line="81" selection-start-column="22" selection-end-line="81" selection-end-column="22" />
-          <folding>
-            <element signature="n#style#0;n#button#0;n#td#0;n#tr#1;n#table#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#button#1;n#td#0;n#tr#1;n#table#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#button#2;n#td#0;n#tr#1;n#table#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#button#0;n#td#0;n#tr#3;n#table#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#button#1;n#td#0;n#tr#3;n#table#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#button#2;n#td#0;n#tr#3;n#table#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#button#0;n#td#0;n#tr#5;n#table#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#button#1;n#td#0;n#tr#5;n#table#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#button#2;n#td#0;n#tr#5;n#table#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#button#0;n#td#0;n#tr#7;n#table#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#button#1;n#td#0;n#tr#7;n#table#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#button#2;n#td#0;n#tr#7;n#table#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#button#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#button#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#img#0;n#td#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#img#0;n#td#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#img#0;n#td#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#img#0;n#td#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#img#0;n#td#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/model/AIStrategy.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
@@ -956,7 +995,41 @@
     <entry file="file://$PROJECT_DIR$/system.properties">
       <provider selected="true" editor-type-id="text-editor">
         <state>
-          <caret column="30" selection-start-column="30" selection-end-column="30" />
+          <caret column="30" lean-forward="true" selection-start-column="30" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/static/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="242">
+          <caret line="93" column="77" selection-start-line="93" selection-start-column="77" selection-end-line="93" selection-end-column="77" />
+          <folding>
+            <element signature="n#style#0;n#button#0;n#td#0;n#tr#1;n#table#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#button#1;n#td#0;n#tr#1;n#table#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#button#2;n#td#0;n#tr#1;n#table#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#button#0;n#td#0;n#tr#3;n#table#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#button#1;n#td#0;n#tr#3;n#table#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#button#2;n#td#0;n#tr#3;n#table#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#button#0;n#td#0;n#tr#5;n#table#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#button#1;n#td#0;n#tr#5;n#table#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#button#2;n#td#0;n#tr#5;n#table#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#button#0;n#td#0;n#tr#7;n#table#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#button#1;n#td#0;n#tr#7;n#table#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#button#2;n#td#0;n#tr#7;n#table#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#button#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#td#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#td#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#td#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#td#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
