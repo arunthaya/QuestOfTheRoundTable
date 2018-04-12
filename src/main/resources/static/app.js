@@ -611,11 +611,14 @@ function displayCards(message, method) {
     // }
     console.log("size of cards is "+message.length);
     for (var i = 0; i < (message.length); i++) {
-        var cardName = "/images/" + message[i].name + ".png";
+        var cName =  (message[i].name).toLowerCase();
+        console.log("ahhahahhahahahahhaha " + cName);
+        var cardName = "/images/" + cName + ".png";
+        console.log()
         var cardNameForId = message[i].name + i;
-        if (message[i].name.includes(" ")) {
+        if (cName.includes(" ")) {
             cardName = cardName.replace(/\s/g, '_');
-        } else if (message[i].name === "Battle-ax") {
+        } else if (cName === "Battle-ax") {
             cardName = "/images/battle_ax.png";
         }
         //$("#cards").append("<td>" + "<img name='"+i+"' id='"+(message[i].name+i)+"' class='cardImg' height='190' width='133' alt='Card image cap' src='"+cardName+"'>" + "</td>");
