@@ -3,7 +3,7 @@ package model;
 import com.devglan.config.SocketHandler;
 import static com.devglan.config.Application.logIt;
 //import com.sun.org.apache.xpath.internal.operations.Bool;
-import javafx.util.Pair;
+//import javafx.util.Pair;
 //import java.util.
 //import sun.awt.image.ImageWatched;
 
@@ -341,7 +341,7 @@ public class GameBoard {
             for(int i = 0; i < foes.size(); i++){
                 boolean isIn = false;
                 for(int y = 0; y < uniqueFoes.size(); y++){
-                    if(uniqueFoes.get(y).getValue() == foes.get(i).getValue())
+                    if(uniqueFoes.get(y).getSecond() == foes.get(i).getSecond())
                         isIn = true;
                 }
                 if(!isIn)
@@ -360,7 +360,7 @@ public class GameBoard {
             }
 
             for (int i = 0; i < uniqueFoes.size(); i++) { //FOR TESTING PURPOSES ONLY
-                System.out.println (i + ": " + uniqueFoes.get(i).getKey().GetName () + "|" + uniqueFoes.get(i).getValue());
+                System.out.println (i + ": " + uniqueFoes.get(i).getFirst().GetName () + "|" + uniqueFoes.get(i).getFirst());
             }
             for (int i = 0; i < uniqueWeapons.size(); i++) { //FOR TESTING PURPOSES ONLY
                 System.out.println (i + ": " + uniqueWeapons.get(i).GetName () + "|" + uniqueWeapons.get(i).GetBattlePoints ());
@@ -392,8 +392,8 @@ public class GameBoard {
         }
 
         for(int i = 0; i < stageAndIndex.size(); i++){
-            int stageNo = stageAndIndex.get(i).getKey();
-            int cardIndex = stageAndIndex.get(i).getValue();
+            int stageNo = stageAndIndex.get(i).getFirst();
+            int cardIndex = stageAndIndex.get(i).getSecond();
             arrListKeys.get(stageNo - 1).add(sponsorForQuest.cardsInHand.get(cardIndex));
         }
 

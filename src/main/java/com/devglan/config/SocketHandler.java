@@ -2,7 +2,7 @@ package com.devglan.config;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import javafx.util.Pair;
+//import javafx.util.Pair;
 import model.*;
 //import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
@@ -823,7 +823,7 @@ public class SocketHandler extends TextWebSocketHandler {
 		Collections.sort(stageAndIndex, new Comparator<Pair<Integer, Integer>>() {
 			@Override
 			public int compare(Pair<Integer, Integer> o1, Pair<Integer, Integer> o2) {
-				return o2.getValue() - o1.getValue();//to sort in descending order
+				return o2.getSecond() - o1.getSecond();//to sort in descending order
 			}
 		});
 
