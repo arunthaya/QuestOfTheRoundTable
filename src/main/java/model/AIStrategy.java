@@ -1,6 +1,6 @@
 package model;
 
-import static sun.audio.AudioPlayer.player;
+//import static sun.audio.AudioPlayer.player;
 
 public interface AIStrategy {
     //All methods, -1 if not going to do it. Not if otherwise

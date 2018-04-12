@@ -2,9 +2,40 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f2706209-d8f8-455d-9590-cf633c739cac" name="Default" comment="Deploy">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/GameBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/GameBoard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/devglan/config/Application.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/devglan/config/SocketHandler$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/devglan/config/SocketHandler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/devglan/config/WebSocketConfig.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/AIPlayer.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/AIStrategy.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Adventure.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Ally.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Amour.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Card.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/CommonStrategy$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/CommonStrategy$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/CommonStrategy.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Event.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Foe.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/GameBoard$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/GameBoard$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/GameBoard$3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/GameBoard$4.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/GameBoard$5.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/GameBoard.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Player.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Quest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Story.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Strategy2$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Strategy2$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Strategy2$3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Strategy2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Test.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Tournament.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Weapon.class" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -25,11 +56,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SocketHandler.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="SocketHandler.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/devglan/config/SocketHandler.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="202">
-              <caret line="14" column="22" lean-forward="true" selection-start-line="14" selection-start-column="22" selection-end-line="14" selection-end-column="22" />
+              <caret line="14" column="22" selection-start-line="14" selection-start-column="22" selection-end-line="14" selection-end-column="22" />
               <folding>
                 <element signature="e#9232#10680#0" />
                 <element signature="e#10683#15793#0" />
@@ -98,20 +129,21 @@
       <file leaf-file-name="GameBoard.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/model/GameBoard.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="5" selection-start-line="5" selection-end-line="5" />
+            <state relative-caret-position="390">
+              <caret line="26" selection-start-line="26" selection-end-line="26" />
               <folding>
+                <element signature="imports" expanded="true" />
                 <element signature="e#23461#23469#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
+      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="585">
-              <caret line="39" column="17" lean-forward="true" selection-start-line="39" selection-start-column="17" selection-end-line="39" selection-end-column="17" />
+            <state relative-caret-position="287">
+              <caret line="38" column="24" selection-start-line="38" selection-start-column="24" selection-end-line="38" selection-end-column="24" />
             </state>
           </provider>
         </entry>
@@ -165,8 +197,9 @@
       <find>tournament</find>
       <find>event</find>
       <find>playerCurrentStatusInTheQuest</find>
-      <find>playerResponse</find>
       <find>notify</find>
+      <find>playerResponse</find>
+      <find>Pair</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -179,9 +212,9 @@
         <option value="$PROJECT_DIR$/src/main/java/model/Player.java" />
         <option value="$PROJECT_DIR$/src/main/resources/static/main.css" />
         <option value="$PROJECT_DIR$/src/main/resources/static/app.js" />
-        <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/java/model/GameBoard.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/devglan/config/SocketHandler.java" />
+        <option value="$PROJECT_DIR$/pom.xml" />
       </list>
     </option>
   </component>
@@ -284,10 +317,10 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="project.structure.last.edited" value="Project" />
-    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.0" />
     <property name="restartRequiresConfirmation" value="false" />
-    <property name="settings.editor.selected.configurable" value="RemoteServers" />
+    <property name="settings.editor.selected.configurable" value="reference.projectsettings.compiler.javacompiler" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -301,7 +334,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Heroku Deployment.Unnamed">
+  <component name="RunManager" selected="Spring Boot.Application">
     <configuration default="true" type="Application" factoryName="Application">
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
     </configuration>
@@ -380,7 +413,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1523444003633</updated>
-      <workItem from="1523444009125" duration="44115000" />
+      <workItem from="1523444009125" duration="45348000" />
     </task>
     <task id="LOCAL-00001" summary="Deploy">
       <created>1523502082126</created>
@@ -389,11 +422,18 @@
       <option name="project" value="LOCAL" />
       <updated>1523502082126</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Deploy">
+      <created>1523502603996</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1523502603996</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="44115000" />
+    <option name="totallyTimeSpent" value="45348000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1920" height="974" extended-state="0" />
@@ -412,7 +452,7 @@
       <window_info id="UI Designer" order="2" />
       <window_info anchor="bottom" id="Debug" order="11" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="14" />
-      <window_info active="true" anchor="bottom" id="Messages" order="3" visible="true" weight="0.3288889" />
+      <window_info anchor="bottom" id="Messages" order="3" visible="true" weight="0.3288889" />
       <window_info anchor="right" id="Palette&#9;" order="3" />
       <window_info id="Image Layers" order="1" />
       <window_info anchor="bottom" id="Java Enterprise" order="4" />
@@ -421,7 +461,7 @@
       <window_info anchor="bottom" id="Run" order="9" weight="0.37666667" />
       <window_info anchor="bottom" id="Spring" order="1" />
       <window_info anchor="bottom" id="Terminal" order="2" weight="0.32976654" />
-      <window_info content_ui="combo" id="Project" order="5" visible="true" weight="0.18229167" />
+      <window_info active="true" content_ui="combo" id="Project" order="5" visible="true" weight="0.18229167" />
       <window_info anchor="right" id="Bean Validation" order="5" />
       <window_info id="Web" order="4" side_tool="true" />
       <window_info anchor="bottom" id="Find" order="8" weight="0.32976654" />
@@ -540,32 +580,33 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="585">
-          <caret line="39" column="17" lean-forward="true" selection-start-line="39" selection-start-column="17" selection-end-line="39" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/model/GameBoard.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" selection-start-line="5" selection-end-line="5" />
-          <folding>
-            <element signature="e#23461#23469#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/devglan/config/SocketHandler.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="202">
-          <caret line="14" column="22" lean-forward="true" selection-start-line="14" selection-start-column="22" selection-end-line="14" selection-end-column="22" />
+          <caret line="14" column="22" selection-start-line="14" selection-start-column="22" selection-end-line="14" selection-end-column="22" />
           <folding>
             <element signature="e#9232#10680#0" />
             <element signature="e#10683#15793#0" />
             <element signature="e#15796#16457#0" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/model/GameBoard.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="26" selection-start-line="26" selection-end-line="26" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#23461#23469#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="287">
+          <caret line="38" column="24" selection-start-line="38" selection-start-column="24" selection-end-line="38" selection-end-column="24" />
         </state>
       </provider>
     </entry>
