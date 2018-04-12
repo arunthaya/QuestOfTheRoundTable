@@ -25,6 +25,10 @@ public class AIPlayer extends Player {
         logIt.info("AI Player done creation");
     }
 
+
+    ArrayList<ArrayList<String>> temp = new ArrayList<ArrayList<String>>();
+
+
     public String toString(){
         return " Name : " + this.getName() + " ,rank: " + this.getRank() + " ,shields: " + this.getShields();
     }
