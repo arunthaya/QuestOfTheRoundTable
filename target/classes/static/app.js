@@ -3,56 +3,28 @@ var name;
 var log;
 
 var MAX_PLAYERS;
-var host;
+var host; //needs to be reset
 var cardSelectedRigGame = [];
 var clicked = 0;
 var playerCardsRigged = {};
 var currentRigPlayer;
 var sentRequestServerRig = false;
 var allCardsToRig;
-var cardsToRemoveAfterUsed = [];
-var indexToBeRemoved = [];
-var cardsSelectedToBePlayed = [];
+var cardsToRemoveAfterUsed = []; //reset
+var indexToBeRemoved = []; //reset
+var cardsSelectedToBePlayed = []; //reset
 var cardsSelectedQuest = {};
 var selectedCards = false;
-var myTimer;
-var questSponsorTimer;
-var hostForRound;
-var currentStoryCard = null;
-var totalStages = 1;
+var myTimer; //clear
+var questSponsorTimer; //reset
+var hostForRound; // needs to be reset
+var currentStoryCard = null; // needs to be reset
+var totalStages = 1; //needs to be reset
 var currentNumStages = 1; // needs to be reset between rounds
-var serverCurrentStage = 0;
-var stringToCompareQuest = "";
+var serverCurrentStage = 0; //needs to be reset
+var stringToCompareQuest = ""; //needs to be reset
+var cardStripCssEnabler = false;
 var sound;
-
-// function connect() {
-// 	ws = new WebSocket('ws://localhost:8080/game');
-// 	ws.onmessage = function(data){
-// 	    console.log("this is what is coming from server unparsed")
-// 	    for(var i in data){
-// 	        console.log(data[i]);
-//         }
-// 	    var parsedData = JSON.parse(data.data);
-// 	    console.log(parsedData);
-// 	    if(parsedData.method == "alertingUser"){
-// 	        alertUser(parsedData.body);
-//         } else if(parsedData.method == "greeting"){
-//             showGreeting(parsedData.body);
-//         }
-// 	}
-// 	 setConnected(true);
-
-function alertUser(message){
-    alert(message);
-}
-
-// function disconnect() {
-//     if (ws != null) {
-//         ws.close();
-//     }
-//     setConnected(false);
-//     console.log("Disconnected");
-// }
 
 function sendName() {
 	var data = JSON.stringify({'method':'newPlayer','body': $("#name").val()})
@@ -80,6 +52,12 @@ function sound(src) {
 }
 
 function pageLoaded(){
+    $("#tournamentCard").remove();
+    $("#questCard").remove();
+    $("#eventCard").remove();
+    JDEV.logging.logToServer("connection established");
+    var url = window.location.href;
+    console.log("url is "+url);
     sound = new sound("opening.mp3");
     sound.play();
     name = prompt("Please enter your name", "");
@@ -91,11 +69,26 @@ function pageLoaded(){
 
     }
     var data = JSON.stringify({'method':'newPlayer','body': name})
-    ws = new WebSocket('ws://localhost:8091/game');
+    //ws = new WebSocket('wss://spring-websocket-without-stomp.herokuapp.com/game');
+    var result = url.replace(/(^\w+:|^)\/\//, '');
+    console.log("result is: "+result);
+    if(result.indexOf("8091") != -1){
+        result = "ws://"+result+"game";
+        console.log("updated result is "+result);
+    } else {
+        result = "wss://"+result+"game";
+        console.log("updated result is "+result);
+    }
+    ws = new WebSocket(result);
     ws.onmessage = function(data){
+        //TODO possibly remove line 81
+        $("")
+        $("#timer").remove();
+        clearInterval(myTimer);
         selectedCards = false;
         cardsSelectedToBePlayed = [];
         var parsedData = JSON.parse(data.data);
+        cardStripCssEnabler = false;
         for(var i in parsedData){
             console.log("Incoming data from server : "+parsedData[i]);
         }
@@ -138,9 +131,14 @@ function pageLoaded(){
         } else if(parsedData.method == "askingOtherPlayersToParcipateInQuest"){
             askingOtherPlayersToParticipateInQuest(parsedData);
         }else if(parsedData.method == "updateCardsForQuest"){
+            console.log("updateCardsForQuest ---------------------------------------------------------------------------->");
+            console.log("body is "+ parsedData.body);
+            console.log("length of parsedData.body is "+parsedData.body.length);
             updateCardsForQuest(parsedData);
         } else if(parsedData.method == "questInProgress"){
             console.log("parsedData.isTest is ", parsedData.isTest);
+            $("#timer").remove();
+            clearInterval(myTimer);
             if(parsedData.isTest === true){
                 bidder(parsedData);
             } else if(parsedData.isTest === false){
@@ -150,8 +148,12 @@ function pageLoaded(){
             bidder(parsedData)
         }else if(parsedData.method == "notify"){
             showToast(parsedData.type, parsedData.message);
+            updateScoreBoard(parsedData.body);
         } else if(parsedData.method == "events"){
             showEvent(parsedData);
+        } else if(parsedData.method == "stripCards"){
+            cardStripCssEnabler = true;
+            confirmUser(parsedData.body, "stripCards");
         }
         else {
             console.log("Error no method handler for incoming method");
@@ -159,6 +161,7 @@ function pageLoaded(){
 
     }
     ws.onopen = function(e) {
+        JDEV.logging.logToServer(data);
         ws.send(data);
     };
 }
@@ -202,16 +205,13 @@ function createGame(){
             'host':name
         };
     var jsonObject = JSON.stringify({'method':'createGame', 'body': JSON.stringify(bodyOfJson)});
+    JDEV.logging.logToServer(bodyOfJson.toString());
     ws.send(jsonObject);
-
 }
 
 function gameCreated(message){
     var gameRoomInfo = message.body;
-    //console.log("game room info is" + gameRoomInfo);
     var numPlayers = message.numPlayers;
-    //console.log("game room info is" + numPlayers);
-   // gameCreated = true;
     $("#individualGameRoom").append(
         "<tr id='rowPlayers'><td><button id = 'joinBtn' align='right' class='btn btn-default' onclick='joinGameRoom()'>Join</button>"+
         " Gameroom :" + gameRoomInfo[0].gameName + ", max players:  " + gameRoomInfo[1].humanPlayers + " , A.I players is "
@@ -223,6 +223,7 @@ function gameCreated(message){
 
 function gameCreatedSuccessfully(message){
     host = true;
+    JDEV.logging.logToServer("host found");
     $("#individualGameRoom").append("<tr id='rowPlayers'><td> Gameroom created successfully </td><td>"+message.numPlayers+"</td></tr>");
     $("#createGameButtons").empty();
 }
@@ -248,11 +249,29 @@ function playerJoined(message){
     }
 }
 
+var tempTestFile;
+function updateScoreBoard(message){
+    $("#playerInfo").empty();
+    $("#playerInfo").append("<thead>" +
+        "<th scope='col'>Players</th>" +
+        "<th scope='col'>Rank</th>" +
+        "<th scope='col'># S</th>" +
+        "<th scope='col'># C</th>" +
+        "</thead>");
+    tempTestFile = message;
+    console.log("message is "+message);
+    for(var i=0; i<message.length; i++){
+        var temp = message[i];
+        $("#playerInfo").append("<tr><td>"+temp.name+"</td><td>"+temp.rank+"</td><td>"+temp.shields+"</td><td>"+temp.cardsInHand+"</td></tr>");
+    }
+}
+
 function startGameRequest(){
     var data = JSON.stringify({
         'method':'startGameRequested'
     });
     //sendConsoleData("start game requested");
+    JDEV.logging.logToServer("start game requested");
     ws.send(data);
 }
 
@@ -281,7 +300,6 @@ function startTheGame(message){
                             "<th scope='col'>Name</th>" +
                             "<th scope='col'>Type</th>" +
                             "<th scope='col'></th>" +
-                            "<th scope='col'>Rig Game</th>" +
                         "</tr>" +
                     "</thead>" +
                     "<tr> " +
@@ -289,8 +307,6 @@ function startTheGame(message){
                         "<td><input id='p1Name' type='textbox'></td>" +
                         "<td><input id='p1Type' type='textbox'></td>" +
                         "<td><button id='p1Add' type='button' class='btn btn-primary' onclick='addCards(this.id)'>+</button><button id='p1minus' type='button' class='btn btn-primary' onclick='removeCards()'>-</button></td>" +
-                        "<td><input type='checkbox' id='rigGame' data-toggle='toggle'></td>" +
-
                     "</tr>" +
 
                     "<tr>" +
@@ -335,15 +351,12 @@ function startTheGame(message){
                         "<td><input id='numShields4' type='textbox' value='0' onfocus=\"this.value=''\"></td>" +
                     "</tr>" +
                 "</table>" +
-            "</div><button id='start' onclick='setUpGame()'>Start Game<button></div>");
+            "</div><button id='start' onclick='setUpGame()'>Start Game</button></div>");
         $('#p1Name').val(message.playera);
         $('#p2Name').val(message.playerb);
         $('#p3Name').val(message.playerc);
         $('#p4Name').val(message.playerd);
-        // $("#main-content").append(
-        //     "<h1>Started Game As Host</h1>"
-        // );
-        // $("body").addClass("loading");
+        //TODO add cheat feature to this page race rigging, cheat feature, timeouts etc
     } else {
         $("#main-content").empty();
         $("#main-content").append(
@@ -598,6 +611,20 @@ function addRigCards(message){
 }
 
 function displayCards(message, method) {
+    $("#moveright").remove();
+    $("#moveleft").remove();
+    //$("#sendCards").remove();
+    $("#main-content").append(
+        "<div id='rightArrow'>" +
+        " <img id='moveleft' src='/images/rightArrow.png' onclick='moveLeft()'>" +
+        "</div>"
+    );
+
+    $("#main-content").append(
+        "<div id='leftArrow'>" +
+        " <img id='moveright' src='/images/leftArrow.png' onclick='moveRight()'>" +
+        "</div>"
+    );
     // var CardsInHand = [];
     // CardsInHand = message;
     //console.log("Display cards function: ")
@@ -611,11 +638,14 @@ function displayCards(message, method) {
     // }
     console.log("size of cards is "+message.length);
     for (var i = 0; i < (message.length); i++) {
-        var cardName = "/images/" + message[i].name + ".png";
+        var cName =  (message[i].name).toLowerCase();
+        console.log("ahhahahhahahahahhaha " + cName);
+        var cardName = "/images/" + cName + ".png";
+        console.log()
         var cardNameForId = message[i].name + i;
-        if (message[i].name.includes(" ")) {
+        if (cName.includes(" ")) {
             cardName = cardName.replace(/\s/g, '_');
-        } else if (message[i].name === "Battle-ax") {
+        } else if (cName === "battle-ax") {
             cardName = "/images/battle_ax.png";
         }
         //$("#cards").append("<td>" + "<img name='"+i+"' id='"+(message[i].name+i)+"' class='cardImg' height='190' width='133' alt='Card image cap' src='"+cardName+"'>" + "</td>");
@@ -635,26 +665,26 @@ function displayCards(message, method) {
                     savedI = i;
                 }
             }
-            //console.log("id we are looking for " + this.id + "and the value of index is " + index + "|" + imgIndex);
-            //console.log("this.name is " + this.name);
             if (index > -1) {
-                //console.log("already in array");
                 cardsSelectedToBePlayed.splice(savedI, 1);
-                //cardsSelectedToBePlayed.delete(index);
-                $(this).css({"position":"relative", "top":"60px"});
+                $(this).css({"position": "relative", "top": "60px"});
+                if(cardStripCssEnabler){
+                    $(this).css({
+                        "filter": "gray",
+                        "-webkit-filter": "grayscale(1)",
+                        "filter": "grayscale(1)"
+                    });
+                }
             }
-
             else {
                 cardsSelectedToBePlayed.push(parseInt(this.name));
-                //console.log("CardsSelectedTobePlayed (inside else) = " + cardsSelectedToBePlayed);
-                $(this).css({"position":"relative", "top":"30px"});
-            }
-            // console.log('Card Selected' + this.name);
-            // console.log("CardsSelectedTobePlayed = " + cardsSelectedToBePlayed);
-
+                    if(cardStripCssEnabler) {
+                        $(this).removeAttr('style');
+                    }
+                    $(this).css({"position": "relative", "top": "30px"});
+                }
         });
     });
-    //$("#main-content").append("<button style='position: absolute; left: 50px; top: 50px; height: 100px; width:30px' type='button' id='sendCards' class='btn btn-success' onclick='sendSelectedCards()'>Done</button>");
     $("#main-content").append("<button type='button' id='sendCards' class='btn btn-success' onclick='sendSelectedCards()'>Done</button>");
     $("#main-content").append("</div>");
 
@@ -665,7 +695,14 @@ function displayCards(message, method) {
     } else if(method == "updateCards"){
         console.log("nothing gonna happen");
     }
-    //console.log("cf here");
+}
+
+function moveLeft(){
+    $('#cards').scrollLeft($('#cards').scrollLeft() + 130);
+}
+
+function moveRight(){
+    $('#cards').scrollLeft($('#cards').scrollLeft() - 130);
 }
 
 function addRiggedCards(){
@@ -809,7 +846,7 @@ function addRiggedCards(){
 
 function startedTheRealGame(message, playerinfo){
     console.log("----------------------------------------->");
-    console.log("playerInfo is "+playerinfo);
+    JDEV.logging.logToServer("playerInfo is "+playerinfo);
     console.log("started the real game "+ message);
     $("body").removeClass("loading");
     $("#main-content").empty();
@@ -817,13 +854,45 @@ function startedTheRealGame(message, playerinfo){
     console.log("main-content size is : ",$("#main-content").size());
     $("#main-content").append(
         "<div id='scoreBoard' style='position: absolute; top: 0%; left: 80%;'>" +
-            "<table class='table'>" +
+            "<table class='table' id='playerInfo'>" +
                 "<thead>" +
                     "<th scope='col'>Players</th>" +
-                    "<th scope='col'># C</th>" +
-                    "<th scope='col'># S</th>" +
                     "<th scope='col'>Rank</th>" +
+                    "<th scope='col'># S</th>" +
+                    "<th scope='col'># C</th>" +
                 "</thead>" +
+
+                "<tr> " +
+                    //"<th scope='row'>Name</th>" +
+                    "<td><label id='p1Name'></label> </td>" +
+                    "<td><label id='p1Rank'></label> </td>" +
+                    "<td><label id='p1Sheilds'></label> </td>" +
+                    "<td><label id='p1NumCards'></label> </td>" +
+                "</tr>" +
+
+                "<tr> " +
+                //"<th scope='row'>Name</th>" +
+                    "<td><label id='p2Name'></label> </td>" +
+                    "<td><label id='p2Rank'></label> </td>" +
+                    "<td><label id='p2Sheilds'></label> </td>" +
+                    "<td><label id='p2NumCards'></label> </td>" +
+                "</tr>" +
+
+                "<tr> " +
+                //"<th scope='row'>Name</th>" +
+                    "<td><label id='p3Name'></label> </td>" +
+                    "<td><label id='p3Rank'></label> </td>" +
+                    "<td><label id='p3Sheilds'></label> </td>" +
+                    "<td><label id='p3NumCards'></label> </td>" +
+                "</tr>" +
+
+                "<tr> " +
+                //"<th scope='row'>Name</th>" +
+                    "<td><label id='p4Name'></label> </td>" +
+                    "<td><label id='p4Rank'></label> </td>" +
+                    "<td><label id='p4Sheilds'></label> </td>" +
+                    "<td><label id='p4NumCards'></label> </td>" +
+                "</tr>" +
             "</table>" +
         "</div>");
     for(var i=0; i<playerinfo.length; i++){
@@ -836,12 +905,12 @@ function startTimer(duration, method) {
     cardsSelectedToBePlayed = [];
     $("body").prepend("<div id='timer' class='alert alert-danger' role='alert'></div>");
     //console.log("in startTimer")
-    if(method != "pickCardsQuest") {
-        var $timerDiv = $(".popup");
-        if ($timerDiv.is("html *")) {
-            $timerDiv.remove();
-        }
-    }
+    // if(method != "pickCardsQuest") {
+    //     var $timerDiv = $(".popup");
+    //     if ($timerDiv.is("html *")) {
+    //         $timerDiv.remove();
+    //     }
+    // }
     var timer = duration, minutes, seconds;
     myTimer = setInterval(function () {
         minutes = parseInt(timer / 60, 10)
@@ -852,6 +921,8 @@ function startTimer(duration, method) {
             messageToDisplay = "Ready up, game starts in";
         } else if(method === "pickedCardsTournament"){
             messageToDisplay = "Pick cards for tournament";
+        } else {
+            messageToDisplay = "Timer runs out - ";
         }
 
         minutes = minutes < 10 ? "0" + minutes : minutes;
@@ -892,6 +963,14 @@ function startTimer(duration, method) {
                     ws.send(returnObj);
                 }
                 console.log("!selectedCards failed in method === pickCardsQuest")
+            } else if(method === "stripCards"){
+                if (!selectedCards) {
+                    var returnObj = JSON.stringify({
+                        'method':'removeExcessCards',
+                        'body': JSON.stringify(cardsSelectedToBePlayed)
+                    });
+                    ws.send(returnObj);
+                }
             }//quest logic for the timer
         }
     }, 1000);
@@ -920,20 +999,14 @@ function sendSelectedCards() {
     $("#main-content").append(
         "<div id='alertForWaiting' class='panel panel-primary'><div  class='panel-heading'>Alert:</div><div class='panel-body'>Waiting for other players<span id='dot'></span></div></div>"
     );
-    // var dots = 0;
-    // if(dots < 3){
-    //     $("#dot").append('.');
-    //     dots++;
-    // } else {
-    //     $("#dot").html('');
-    //     dots = 0;
-    // }
 }
 
 function startTournament(message){
+    JDEV.logging.logToServer("Beginning tournament");
     currentStoryCard = "tournament";
     $("#tournamentCard").remove();
     $("#questCard").remove();
+    $("#eventCard").remove();
     console.log("message is : ", message.body);
     clearInterval(myTimer);
     var imageName = ((message.body).toString()).toLowerCase();
@@ -945,6 +1018,7 @@ function startTournament(message){
 }
 
 function showEvent(message){
+    JDEV.logging.logToServer("In event displaying "+message);
     $("#tournamentCard").remove();
     $("#questCard").remove();
     $("#eventCard").remove();
@@ -956,9 +1030,11 @@ function showEvent(message){
 }
 
 function startQuest(message){
+    JDEV.logging.logToServer("Starting quest "+message);
     currentStoryCard = "quest";
     $("#tournamentCard").remove();
     $("#questCard").remove();
+    $("#eventCard").remove();
     console.log("message is : ", message.body);
     clearInterval(myTimer);
     var imageName = (message.body).toString();
@@ -968,14 +1044,9 @@ function startQuest(message){
     imageName = "/images/"+imageName+".png";
     $("#main-content").append("<td>" + "<img id='questCard' style='position: relative; left: -180px; top: 200px;' class='cardImg' height='190' width='133' alt='Card image cap' src='"+imageName+"'>" + "</td>");
     confirmUser("Would you like to sponsor the following quest: " + message.body + " ?", "quest");
-    // if(message.isHost === "yes") {
-    //     confirmUser("Would you like to sponsor the following quest: " + message.body + " ?", "quest");
-    //     hostForRound = true;
-    // } else {
-    //     hostForRound = false;
-    // }
-
 }
+
+
 
 function askPlayerToParticipateInQuest(cardName, host){
     $("#questCard").remove();
@@ -998,6 +1069,7 @@ function participatingInQuest(){
     var response = JSON.stringify({'method':'playerParticipatingInQuest',
         'body':'yes',
         'name': name});
+    JDEV.logging.logToServer(response.toString());
     ws.send(response);
 }
 
@@ -1006,6 +1078,7 @@ function notParticipatingInQuest(){
     var response = JSON.stringify({'method':'playerParticipatingInQuest',
         'body':'no',
         'name':name});
+    JDEV.logging.logToServer(response.toString());
     ws.send(response);
 }
 
@@ -1017,8 +1090,7 @@ function confirmUser(message, storyCard) {
         "<div style='position:relative' class='popup'>" +
         "<div class='upper'>" + message + "</div>" +
         "<div class='stroke'></div>" +
-        // "<div class='lower'>" + "<button onclick='storyCardTimer()' class='confirmBox'><i class='icon-large icon-ok'></i>Yes</button>" +
-        "<div class='lower'>" + "<button id='cBox' class='confirmBox'><i class='icon-large icon-ok'></i>Yes</button>" +
+        "<div class='lower'>" + "<button id='cBox' class='confirmBox'>Yes</button>" +
         "<button id='noButtonConfirmUser' onclick='removeConfirmUser()' class='confirmBox'>No</button>" +
         "</div>" +
         "</div>");
@@ -1030,6 +1102,10 @@ function confirmUser(message, storyCard) {
         $("#noButtonConfirmUser").remove();
         $("#cBox").text("Ok");
         startTimer(120, "pickCardsQuest");
+    } else if(storyCard === "stripCards"){
+        $("#noButtonConfirmUser").remove();
+        $("#cBox").text("Done");
+        startTimer(30, "stripCards");
     }
 }
 
@@ -1079,6 +1155,14 @@ function storyCardTimer(storyCard){
         ws.send(responseObj);
         clearInterval(myTimer);
         $(".popup").remove();
+    } else if(storyCard === "stripCards"){
+        $(".popup").remove();
+        selectedCards = true;
+        var responseObj = JSON.stringify({
+            'method':'removeExcessCards',
+            'body':JSON.stringify(cardsSelectedToBePlayed)
+        });
+        ws.send(responseObj);
     }
     else {
         console.log("Critical Error 9001");
@@ -1086,6 +1170,7 @@ function storyCardTimer(storyCard){
 }
 
 function startTournamentTie(message){
+    JDEV.logging.logToServer(message.toString());
     cardsSelectedToBePlayed = [];
     if(message.stillInTournament === "yes"){
         displayCards(message.body, "tournament");
@@ -1096,6 +1181,7 @@ function startTournamentTie(message){
 }
 
 function setUpQuest(message) {
+    cardStripCssEnabler = true;
     console.log("this message  (inside setup quest) "+ message);
     console.log("this message.body  (inside setup quest) "+ message.body);
     console.log("this message.canSponsor  (inside setup quest) "+ message.canSponsor);
@@ -1115,16 +1201,13 @@ function setUpQuest(message) {
         if(currentNumStages <= totalStages) {
             console.log("current stage right now " + currentNumStages);
             if (currentNumStages == 1) {
-                console.log("currentNumStage should be 1 "+currentNumStages);
-                //$(".upper").empty();
-                //$(".upper").text("Select the cards you'd like for stage1 " + currentNumStages);
+                console.log("currentNumStage should be 1 ");
                 console.log("in 1");
                 cardsSelectedQuest.stageOne = cardsSelectedToBePlayed;
                 currentNumStages++;
                 $(".upper").empty();
-                $(".upper").text("Select the cards you'd like for stage 2 " + currentNumStages);
+                $(".upper").text("Select the cards you'd like for stage 2 ");
             } else if (currentNumStages == 2) {
-
                 console.log("in 2");
                 currentNumStages++;
                 $(".upper").empty();
@@ -1133,7 +1216,7 @@ function setUpQuest(message) {
                     sendQuestCards();
                     return;
                 }
-                $(".upper").text("Select the cards you'd like for stage3 " + currentNumStages);
+                $(".upper").text("Select the cards you'd like for stage 3 ");
             } else if (currentNumStages == 3) {
                 console.log("in 3");
                 currentNumStages++;
@@ -1143,7 +1226,7 @@ function setUpQuest(message) {
                     sendQuestCards();
                     return;
                 }
-                $(".upper").text("Select the cards you'd like for stage4 " + currentNumStages);
+                $(".upper").text("Select the cards you'd like for stage4 ");
                 //currentNumStages++;
             } else if (currentNumStages == 4) {
                 console.log("in 4");
@@ -1154,7 +1237,7 @@ function setUpQuest(message) {
                     sendQuestCards();
                     return;
                 }
-                $(".upper").text("Select the cards you'd like for stage5 " + currentNumStages);
+                $(".upper").text("Select the cards you'd like for stage 5");
                 //currentNumStages++;
             } else if (currentNumStages == 5) {
                 console.log("in 5");
@@ -1166,7 +1249,6 @@ function setUpQuest(message) {
                     return;
                 }
                 $(".upper").text("Should never get here ERR 9001 " + currentNumStages);
-                //currentNumStages++;
             }
         }else {
             console.log("Should we be ever getting to the else? Possible error 9001")
@@ -1211,6 +1293,7 @@ function sendQuestCards(){
         'stage5':JSON.stringify(cardsSelectedQuest.stageFive)
     });
     console.log("responseObj being sent back to server from sendQuestCards is "+responseObj);
+    JDEV.logging.logToServer(responseObj.toString());
     ws.send(responseObj);
 
 }
@@ -1245,11 +1328,8 @@ function sponsorFound(message){
 
 }
 
-function setUpStages(message) {
-
-}
-
 function playStage(message){
+    JDEV.logging.logToServer(message.toString());
     console.log("currentstory card boolean for test is "+message.isTest);
     $(".popup").remove();
     $("#timer").remove();
@@ -1276,7 +1356,6 @@ function updateCardsForQuest(message) {
 //     $(".popup").remove();
 //     if(message.body){
 //         //TODO you have been eliminated using notification
-//         window.alert("You suck, you have been eliminated");
 //     }
 //     else{
 //         //TODO not eliminated

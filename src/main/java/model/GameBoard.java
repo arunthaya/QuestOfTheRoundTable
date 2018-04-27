@@ -247,13 +247,26 @@ public class GameBoard {
 
         for(int i = 0; i < cardsSelected.size(); i++){
             //TODO modify this to the above as well
-            Adventure a = p.cardsInHand.get(cardsSelected.get(i));
+            logIt.debug(cardsSelected.get(i));
+            int x = 0;
+            try {
+                x = Integer.parseInt(cardsSelected.get(i) + "");
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            //logIt.debug(p.cardsInHand.remove(x));
+
+            Adventure a = p.cardsInHand.get(x);
             p.roundBattleScore += a.GetBattlePoints();
             logIt.debug(p.getName() + " played " + a.GetName());
-            p.cardsInHand.remove(cardsSelected.get(i));
+
+
+
+            p.cardsInHand.remove(x);
             if(a instanceof  Ally){
                 p.alliesInPlay.add((Ally) a);
             }
+
         }
         logIt.debug("Number of allies in players hands now is " + p.alliesInPlay.size());
         logIt.debug(p.getName() + "battle score is now " + p.roundBattleScore);
@@ -835,21 +848,20 @@ public class GameBoard {
         cardCounter = 0;
 
         /* Tournament */
-        /*EVENT*/
-        storyDeck.add(createEventCard("Chivalrous Deed", 3, 0, false, 0, 0, Event.playersTargeted.get(0), "Player(s) with both lowest rank and least amount of shields, receives 3 shields"));
-        storyDeck.add(createEventCard("Pox", -1, 0, false, 0, 0, Event.playersTargeted.get(2), "All players except the player drawing this card lose 1 shield"));
-        storyDeck.add(createEventCard("Plague", -2, 0, false, 0, 0, Event.playersTargeted.get(3), "Drawer loses two shields if possible"));
-        storyDeck.add(createEventCard("King's Recognition", 2, 0, false, 0, 0, Event.playersTargeted.get(6), "The next player(s) to complete a Quest will receive 2 extra shields"));
-        storyDeck.add(createEventCard("King's Recognition", 2, 0, false, 0, 0, Event.playersTargeted.get(6), "The next player(s) to complete a Quest will receive 2 extra shields"));
-        storyDeck.add(createEventCard("Queen's Favor", 0, 2, false, 0, 0, Event.playersTargeted.get(5), "The lowest ranked player(s) immediately receives 2 Adventure Cards"));
-        storyDeck.add(createEventCard("Queen's Favor", 0, 2, false, 0, 0, Event.playersTargeted.get(5), "The lowest ranked player(s) immediately receives 2 Adventure Cards"));
-        storyDeck.add(createEventCard("Court Called to Camelot", 0, 0, true, 0, 0, Event.playersTargeted.get(1), "All Allies in play must be discarded"));
-        storyDeck.add(createEventCard("Court Called to Camelot", 0, 0, true, 0, 0, Event.playersTargeted.get(1), "All Allies in play must be discarded"));
-        //storyDeck.add(createEventCard("King's Call To Arms", 0, 0, false, 1, 2, Event.playersTargeted.get(4), "The highest ranked player(s) must place 1 weapon in the discard pile. If unable to do so, 2 Foe Cards must be discarded"));
-        storyDeck.add(createEventCard("Prosperity Throughout the Realm", 0, 2, false, 0, 0, Event.playersTargeted.get(1), "All players may immeadiately draw two Adventure Cards"));
+        /*EVENT
+
+        //storyDeck.add(createQuestCard("Boar Hunt", 2, "Boar", "none"));
+//        storyDeck.add(createEventCard("Pox", -1, 0, false, 0, 0, Event.playersTargeted.get(2), "All players except the player drawing this card lose 1 shield"));
+//        storyDeck.add(createEventCard("Plague", -2, 0, false, 0, 0, Event.playersTargeted.get(3), "Drawer loses two shields if possible"));
+//        storyDeck.add(createEventCard("King's Recognition", 2, 0, false, 0, 0, Event.playersTargeted.get(6), "The next player(s) to complete a Quest will receive 2 extra shields"));
+//        storyDeck.add(createEventCard("King's Recognition", 2, 0, false, 0, 0, Event.playersTargeted.get(6), "The next player(s) to complete a Quest will receive 2 extra shields"));
+//        storyDeck.add(createEventCard("Queen's Favor", 0, 2, false, 0, 0, Event.playersTargeted.get(5), "The lowest ranked player(s) immediately receives 2 Adventure Cards"));
+//        storyDeck.add(createEventCard("Queen's Favor", 0, 2, false, 0, 0, Event.playersTargeted.get(5), "The lowest ranked player(s) immediately receives 2 Adventure Cards"));
+//        storyDeck.add(createEventCard("Court Called to Camelot", 0, 0, true, 0, 0, Event.playersTargeted.get(1), "All Allies in play must be discarded"));
+//        storyDeck.add(createEventCard("Court Called to Camelot", 0, 0, true, 0, 0, Event.playersTargeted.get(1), "All Allies in play must be discarded"));
+//        //storyDeck.add(createEventCard("King's Call To Arms", 0, 0, false, 1, 2, Event.playersTargeted.get(4), "The highest ranked player(s) must place 1 weapon in the discard pile. If unable to do so, 2 Foe Cards must be discarded"));
 
         /*Tournament*/
-//        storyDeck.add(createTournamentCard("AT YORK", 0));
 //        storyDeck.add(createTournamentCard("AT TINTAGEL", 1));
 //        storyDeck.add(createTournamentCard("AT ORKNEY", 2));
 //        storyDeck.add(createTournamentCard("AT CAMELOT", 3));
@@ -860,14 +872,20 @@ public class GameBoard {
 //        storyDeck.add(createQuestCard("Vanquish King Arthur's Enemies", 3, "none", "none"));
 //        storyDeck.add(createQuestCard("Repel the Saxon Raiders", 2, "All Saxons", "none"));
 //        storyDeck.add(createQuestCard("Repel the Saxon Raiders", 2, "All Saxons", "none"));
-//        storyDeck.add(createQuestCard("Boar Hunt", 2, "Boar", "none"));
-//        storyDeck.add(createQuestCard("Boar Hunt", 2, "Boar", "none"));
+
 //        storyDeck.add(createQuestCard("Search for the Questing Beast", 4, "none", "King Pellinore"));
 //        storyDeck.add(createQuestCard("Defend the Queens Honor", 4, "All", "Sir Lancelot"));
-//        storyDeck.add(createQuestCard("Slay the Dragon", 3, "Dragon", "none"));
 //        storyDeck.add(createQuestCard("Rescue the Fair Maiden", 3, "Black Knight", "none"));
 //        storyDeck.add(createQuestCard("Search for the Holy Grail", 5, "All", "Sir Percival"));
 //        storyDeck.add(createQuestCard("Test of the Green Knight", 4, "Green Knight", "Sir Gawain"));
+
+
+        //storyDeck.add(createQuestCard("Slay the Dragon", 3, "Dragon", "none"));
+        storyDeck.add(createTournamentCard("AT YORK", 0));
+        //storyDeck.add(createEventCard("Prosperity Throughout the Realm", 0, 2, false, 0, 0, Event.playersTargeted.get(1), "All players may immeadiately draw two Adventure Cards"));
+        //storyDeck.add(createEventCard("Chivalrous Deed", 3, 0, false, 0, 0, Event.playersTargeted.get(0), "Player(s) with both lowest rank and least amount of shields, receives 3 shields"));
+        //storyDeck.add(createQuestCard("Boar Hunt", 2, "Boar", "none"));
+
 
 
     }

@@ -11,7 +11,8 @@ body {
     padding: 10px;
     border: 1px solid #aaaaaa;
 }
-
+styled-components
+react-emotion
 #main-content {
     max-width: 100%;
     max-height: 100%;
@@ -39,7 +40,8 @@ body {
 
 #scoreBoard {
     background-image: url('/images/newScroll.png');
-    background-size: 193px 193px;
+    background-size: 220px 240px;
+    background-position: 90% 10%;
     background-repeat: no-repeat;
 }
 /* Start by setting display:none to make this hidden.
@@ -111,15 +113,37 @@ body.loading .modal {
     width:133px;
 }
 
-#a {
-    background-image: url('/images/newScroll.png');
-    background-size: 100px, 800px;
-    background-repeat: no-repeat;
-    background-position: 30% 50%;
-    width: 60%;
+/*#a {*/
+    /*background-image: url('/images/newScroll.png');*/
+    /*background-size: 100px, 800px;*/
+    /*background-repeat: no-repeat;*/
+    /*background-position: 30% 50%;*/
+    /*width: 60%;*/
 
+/*}*/
+
+.container #rightArrow{
+    position: absolute;
+    top: 620px;
+    left: 1390px;
 }
 
+.container #leftArrow{
+    position: absolute;
+    top: 620px;
+    left: 50px;
+}
+
+#moveleft:hover{
+    transform: scale(1.5);
+}
+#moveright:hover{
+    transform: scale(1.5);
+}
+
+button #confirmBox{
+    text-decoration: underline;
+}
 
 
 

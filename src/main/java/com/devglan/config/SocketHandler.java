@@ -11,9 +11,6 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 //import org.json.simple.JSONArray;
 
 import java.io.IOException;
-//import java.net.InetSocketAddress;
-//import java.net.URI;
-//import java.security.Principal;
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -46,6 +43,8 @@ public class SocketHandler extends TextWebSocketHandler {
 	private int askedPlayersToSponsorQuest = 0;
 	private int currentStageNow;
 	private int playerBid = 0;
+	private int stripCardsCounter = 0;
+	private int mustStripCards = 0;
 	private boolean IS_TIE = false;
 	private boolean FIRSTPASS_BID = false;
 	private boolean AI_TURNEDON = false;
@@ -63,8 +62,8 @@ public class SocketHandler extends TextWebSocketHandler {
 	public static final String NUM_STAGES = "numStages";
 
 	public SocketHandler(){
-		System.out.println("Constructor for socket handler called");
-		logIt.info("Constructor called using log 4j");
+		//System.out.println("Constructor for socket handler called");
+		logIt.info("Setting up connection");
 		play = new GameBoard(this);
 	}
 
@@ -74,9 +73,6 @@ public class SocketHandler extends TextWebSocketHandler {
 			throws Exception {
 		logIt.info("Incoming message from " + session.getId());
 		Map<String, String> value = new Gson().fromJson(message.getPayload(), Map.class);
-//		for(Map.Entry<String,String> entry: value.entrySet()){
-//		    logIt.debug("Key is " + entry.getKey() + " | " + entry.getValue());
-//        }
 		String methodName = value.get("method");
 		switch(methodName){
 			case "newPlayer":
@@ -107,10 +103,6 @@ public class SocketHandler extends TextWebSocketHandler {
 				logIt.info("Incoming message from " + session.getId());
 				addCards(session);
 				break;
-			case "sendConsoleData":
-				logIt.info("Incoming message from " + session.getId());
-				logConsoleInput(session, value.get("body"));
-				break;
 			case "playerReady":
 				logIt.info("Incoming message from " + session.getId());
 				playerReady(session);
@@ -127,7 +119,6 @@ public class SocketHandler extends TextWebSocketHandler {
 			case "cardsForQuest":
 				logIt.info("Incoming message from " + session.getId());
 				cardsForQuest(session, value);
-
 				break;
             case "playerParticipatingInQuest":
                 logIt.info("Incoming message from "+ session.getId());
@@ -139,11 +130,15 @@ public class SocketHandler extends TextWebSocketHandler {
                 break;
 			case "biddingRequest":
 				logIt.info("Incoming message from " + session.getId());
-				bidHandler(session, value, false);
+				bidHandler(session, value, false, Integer.parseInt(value.get("currentStage")));
 				break;
 			case "biddingRemoveCards":
 				logIt.info("Incoming message from " + session.getId());
-				bidHandler(session, value, true);
+				bidHandler(session, value, true, Integer.parseInt(value.get("currentStage")));
+				break;
+			case "removeExcessCards":
+				logIt.info("incoming message from " + session.getId());
+				stripCards(session, value);
 				break;
 			default:
 				logIt.error("critical error 9001");
@@ -156,15 +151,10 @@ public class SocketHandler extends TextWebSocketHandler {
 		sessions.add(session);
 	}
 
-	public void logConsoleInput(WebSocketSession session, String message) throws Exception{
-		logIt.info(message);
-	}
-
-
 	public void alertingUser(WebSocketSession session, String message) throws IOException{
 		JsonObject response = new JsonObject();
 		response.addProperty(METHOD_KEY, "alertingUser");
-		response.addProperty(BODY_KEY, "fuck u bic2");
+		response.addProperty(BODY_KEY, ".");
 		session.sendMessage(new TextMessage(response.toString()));
 	}
 
@@ -189,7 +179,6 @@ public class SocketHandler extends TextWebSocketHandler {
         Map<String, String> value = new Gson().fromJson(body, Map.class);
         CURRENTPLAYERS++;
         JsonArray bodyOfResponse = new JsonArray();
-		logIt.info("-------------------------------------------------------------------------------------------------");
         for (Map.Entry<String, String> entry : value.entrySet())
         {
             //System.out.println(entry.getKey() + "/" + entry.getValue());
@@ -211,7 +200,7 @@ public class SocketHandler extends TextWebSocketHandler {
 				}
 			}
 
-			logIt.info("users size is "+users.size());
+			//logIt.info("users size is "+users.size());
             JsonObject element = new JsonObject();
             element.addProperty(entry.getKey(), entry.getValue());
             bodyOfResponse.add(element);
@@ -287,10 +276,10 @@ public class SocketHandler extends TextWebSocketHandler {
 					}
 					play.numPlayers++;
 				}
-				logIt.info("made it here");
+				//ogIt.info("made it here");
 				webSocketSession.sendMessage(new TextMessage(response.toString()));
 			} else {
-				logIt.info("made it here");
+				//logIt.info("made it here");
 				JsonObject response = new JsonObject();
 				response.addProperty(METHOD_KEY, "startTheGame");
 				response.addProperty(BODY_KEY, "hostStartedGame");
@@ -387,7 +376,7 @@ public class SocketHandler extends TextWebSocketHandler {
 			scoreBoard.add(individualPlayer);
 		}
 
-		logIt.debug("orderOfPlayers is: "+orderOfPlayers.size());
+		//logIt.debug("orderOfPlayers is: "+orderOfPlayers.size());
 		for(int i=0; i<play.playerList.size(); i++){
 			if(play.playerList.get(i) instanceof AIPlayer){
 				logIt.debug("user is "+play.playerList.get(i).toString());
@@ -397,7 +386,7 @@ public class SocketHandler extends TextWebSocketHandler {
 			} else {
 				play.playerList.get(i).setSession(gameRoomSessions.get(i));
 				orderOfPlayers.offer(gameRoomSessions.get(i));
-				logIt.debug("orderOfPlayers is: " + orderOfPlayers.size());
+				//logIt.debug("orderOfPlayers is: " + orderOfPlayers.size());
 				JsonObject a = new JsonObject();
 				a.addProperty(METHOD_KEY, "startedTheActualGame");
 
@@ -443,7 +432,7 @@ public class SocketHandler extends TextWebSocketHandler {
 		logIt.info("Session: "+session.getId()+" , selectedCardsToBeRemovedFromCardsInHand");
 		String indexes = "";
 		for (Map.Entry<String, String> entry : message.entrySet()) {
-			logIt.info("Printing out incoming message from session");
+			//logIt.info("Printing out incoming message from session");
 			logIt.info("key " + entry.getKey() + " ,value:" + entry.getValue());
 			if(entry.getKey().equals("body")){
 				logIt.info("Reached entry that is the body from JSON");
@@ -502,7 +491,7 @@ public class SocketHandler extends TextWebSocketHandler {
 			else if(winnerReturn.size() > 1){
 				if(IS_TIE){
 					String playerWinnerNames ="";
-					System.out.println("Inside the second consecetive tie statment");
+					System.out.println("There has been a tie again, all players involved in the tie will be awarded sheilds");
 					for(Player p: winnerReturn){
 						playerWinnerNames += p.getName() + " ";
 					}
@@ -515,7 +504,7 @@ public class SocketHandler extends TextWebSocketHandler {
 							card.addProperty("battlePoints", p.cardsInHand.get(i).GetBattlePoints());
 							bodyOfResponse.add(card);
 						}
-						logIt.info("JSON card array object is "+bodyOfResponse);
+						//logIt.info("JSON card array object is "+bodyOfResponse);
 						response.add(BODY_KEY, bodyOfResponse);
 						boolean isWinner = false;
 						for(Player tiedPlayer: winnerReturn){
@@ -555,7 +544,7 @@ public class SocketHandler extends TextWebSocketHandler {
 							card.addProperty("battlePoints", p.cardsInHand.get(i).GetBattlePoints());
 							bodyOfResponse.add(card);
 						}
-						logIt.info("JSON card array object is "+bodyOfResponse);
+						//logIt.info("JSON card array object is "+bodyOfResponse);
 						response.add(BODY_KEY, bodyOfResponse);
 						boolean isWinner = false;
 						for(Player tiedPlayer: winnerReturn){
@@ -578,18 +567,22 @@ public class SocketHandler extends TextWebSocketHandler {
 			}
 
 		}
-
-		//session.sendMessage(new TextMessage(response.toString()));
 	}
 
 	public void playerReady(WebSocketSession session) throws Exception { //Drawing story card
+
         if(!playersReadyRanOnce) {
             PLAYER_READYCOUNT++;
         }
 		System.out.println("playerReadyCount " + PLAYER_READYCOUNT);
 		System.out.println("CurrentPlayers " + CURRENTPLAYERS);
 		System.out.println("player ready called ");
+//		if(playersReadyRanOnce){
+//			mustStripCards = stripCardsNotifier();
+//		}
 		if(PLAYER_READYCOUNT == CURRENTPLAYERS) {
+			stripCardsCounter = 0;
+			mustStripCards = 0;
 			playersReadyRanOnce = true;
 			JsonObject response = new JsonObject();
 			if(play.gameOver){
@@ -598,7 +591,7 @@ public class SocketHandler extends TextWebSocketHandler {
 				return;
 			}
 			Story storyCard = (Story) play.draw("Story");
-			logIt.debug("storycard drawn is : " + storyCard.GetName());
+			logIt.info("storycard drawn is : " + storyCard.GetName());
 			play.whosTurn();
 			WebSocketSession temp = orderOfPlayers.pop();
 			orderOfPlayers.offer(temp);
@@ -623,7 +616,7 @@ public class SocketHandler extends TextWebSocketHandler {
 				response.addProperty(METHOD_KEY, "questStarted");
 				response.addProperty(BODY_KEY, storyCard.GetName());
 				response.addProperty(NUM_STAGES, ((Quest) storyCard).GetNumStages());
-				logIt.debug("this is the player i am sending the message to rn " + play.playerList.get(play.playerTurn - 1).getName());
+				//logIt.debug("this is the player i am sending the message to rn " + play.playerList.get(play.playerTurn - 1).getName());
 				temp.sendMessage(new TextMessage(response.toString()));
 				//play.playerList.get(play.playerTurn - 1).getSession().sendMessage(new TextMessage(response.toString()));
 				askedPlayersToSponsorQuest++;
@@ -635,9 +628,7 @@ public class SocketHandler extends TextWebSocketHandler {
 					p.getSession().sendMessage(new TextMessage(eventResponse.toString()));
 				}
 				play.isEvent((Event) storyCard);
-				for(Player p: play.playerList){
-					updateCards(p);
-				}
+				updateCards();
 				Thread.sleep(5000);
 				playerReady(session);
 			}
@@ -645,13 +636,13 @@ public class SocketHandler extends TextWebSocketHandler {
 	}
 
 	public void hostForQuest(WebSocketSession session, String message) throws IOException {
-        logIt.info("in host for quest with message: " + message);
-        logIt.info("order of players : "+orderOfPlayers.size());
+        //logIt.info("in host for quest with message: " + message);
+        //logIt.info("order of players : "+orderOfPlayers.size());
 		//orderOfPlayers.offer(session);
         boolean pCanSponsor = false;
         String sponsorName = "";
         if (RACING_ENABLED) {
-            logIt.debug("race rigging is om");
+            logIt.debug("race rigging is on");
             JsonObject response = new JsonObject();
             response.addProperty(METHOD_KEY, "canSponsorQuest");
             for (Player p : play.playerList) {
@@ -695,7 +686,7 @@ public class SocketHandler extends TextWebSocketHandler {
         }
         else{
             logIt.debug("race rigging is off");
-            logIt.debug("message recieving " + message);
+          //  logIt.debug("message recieving " + message);
             JsonObject response = new JsonObject();
             response.addProperty(METHOD_KEY, "questStarted");
             if(message.equals("yes")){
@@ -763,8 +754,8 @@ public class SocketHandler extends TextWebSocketHandler {
 							break;
 						}
 					}
-                    logIt.debug("session id is " + session.getId());
-                    logIt.debug("inside no statment");
+                    //logIt.debug("session id is " + session.getId());
+                    //logIt.debug("inside no statment");
                     //logIt.debug("player name to ask next : " + play.playerList.get(play.askNext() - 1).getName());
                     response.addProperty(BODY_KEY, currentStory.GetName());
                     response.addProperty(NUM_STAGES, ((Quest) currentStory).GetNumStages());
@@ -790,18 +781,12 @@ public class SocketHandler extends TextWebSocketHandler {
 	    logIt.debug("Inside cardsForQuest in the actual method");
         playersParticipating.clear();
         orderOfPlayersToAskQuest.clear();
-		//logIt.info("This is message in (CardsForQuest) " + message);
-//		logIt.info(message.get("stage1"));
-//		logIt.info(message.get("stage2"));
-//		logIt.info(message.get("stage3"));
-//		logIt.info(message.get("stage4"));
-//		logIt.info(message.get("stage5"));
-        logIt.debug("made it past the beginning stuff");
+        //logIt.debug("made it past the beginning stuff");
 		ArrayList<Pair<Integer, Integer>> stageAndIndex = new ArrayList<>();
 		Quest questCard = (Quest) play.discardStoryDeck.get(play.discardStoryDeck.size() - 1);
-		logIt.debug("made it past the beginning stuff");
+		//logIt.debug("made it past the beginning stuff");
 		for(int i = 1; i <= questCard.GetNumStages(); i++){
-			logIt.debug("i in cardsForQuest is " + i);
+			//logIt.debug("i in cardsForQuest is " + i);
 			String key = "stage" + i + "";
 			String entry = message.get(key);
 			logIt.debug("This is entry: " + entry);
@@ -841,10 +826,10 @@ public class SocketHandler extends TextWebSocketHandler {
         }
 
         cardsAndBattlePoints = play.setUpStages(stageAndIndex, questCard, sponsorForQuest);
-		updateCards(sponsorForQuest);
+		updateCards();
 
         logIt.debug("playerNumber is "+ playerNumber);
-        logIt.debug("orderOfPlayersSize is "+ orderOfPlayersToAskQuest.size());
+        //logIt.debug("orderOfPlayersSize is "+ orderOfPlayersToAskQuest.size());
         if(playerNumber == 0){
             if(TOTAL_PLAYERS > 1)
                 orderOfPlayersToAskQuest.add(1);
@@ -895,8 +880,8 @@ public class SocketHandler extends TextWebSocketHandler {
             }
         }
 
-        logIt.debug("order of players to ask quest size after running logic is "+orderOfPlayersToAskQuest.size());
-        logIt.debug("printing out order of players to ask next");
+        //logIt.debug("order of players to ask quest size after running logic is "+orderOfPlayersToAskQuest.size());
+        //logIt.debug("printing out order of players to ask next");
         for(Integer playerOrder: orderOfPlayersToAskQuest){
             System.out.println(playerOrder);
         }
@@ -965,7 +950,7 @@ public class SocketHandler extends TextWebSocketHandler {
                     session.sendMessage(new TextMessage(response.toString())); //sending updated cards to the server
                 }
             }
-            logIt.info("playersParticipating size is "+playersParticipating.size());
+            //logIt.info("playersParticipating size is "+playersParticipating.size());
         } else {
             logIt.info("Player not participating");
 			for(Player p: play.playerList) {
@@ -979,6 +964,7 @@ public class SocketHandler extends TextWebSocketHandler {
 	    logIt.debug("askedPlayersToParticipateInQuest : "+askedPlayersToParticipateInQuest);
 	    boolean currentCardIsTest = false;
         if(askedPlayersToParticipateInQuest == (TOTAL_PLAYERS - 1)){
+        	updateCards();
             logIt.info("asked all players");
             askedPlayersToParticipateInQuest = 0;
             if(playersParticipating.size() != 0) {
@@ -993,18 +979,19 @@ public class SocketHandler extends TextWebSocketHandler {
 							playerBid = testCard.GetMinBids();
 							response.addProperty("maxBids", 11);
 							currentCardIsTest = true;
-							break;
+
 						}
 						counter++;
 					}
 					response.addProperty("totalStages", ((Quest) currentStory).GetNumStages());
-					response.addProperty("currentStage", 1);
-					currentStageNow = 1;
+					response.addProperty("currentStage", 0);
+					currentStageNow = 0;
 					response.addProperty("isTest", currentCardIsTest);
 					int nextPlayerToAsk = orderOfPlayersToAskQuest.get(askedPlayersToParticipateInQuest);
 					if (currentCardIsTest) {
 						logIt.debug("card is a test to ask players");
 						play.playerList.get(nextPlayerToAsk).getSession().sendMessage(new TextMessage(response.toString()));
+						return;
 					} else {
 						logIt.debug("card is not a test to ask players");
 						p.getSession().sendMessage(new TextMessage(response.toString()));
@@ -1019,7 +1006,7 @@ public class SocketHandler extends TextWebSocketHandler {
 				for(int i = 0; i < cardsToDraw; i++){
 					sponsorForQuest.cardsInHand.add((Adventure) play.draw("Adventure"));
 				}
-				updateCards(sponsorForQuest);
+				updateCards();
 				for(Player p:play.playerList){
 					if(p != sponsorForQuest) {
 						notify(p.getSession(), "info", "Nobody has accepted the quest and "+sponsorForQuest.getName() + " was awarded for "+ cardsUsed + " cards");
@@ -1034,7 +1021,7 @@ public class SocketHandler extends TextWebSocketHandler {
             response.addProperty(BODY_KEY, currentStory.GetName());
             response.addProperty("questHost", sponsorForQuest.getName());
             int nextPlayerToAsk = orderOfPlayersToAskQuest.get(askedPlayersToParticipateInQuest);
-            logIt.debug("next Player to ask is "+nextPlayerToAsk);
+            logIt.debug("next Player to participate in quest is : "+nextPlayerToAsk);
             play.playerList.get(nextPlayerToAsk).getSession().sendMessage(new TextMessage(response.toString()));
         }
     }
@@ -1055,9 +1042,8 @@ public class SocketHandler extends TextWebSocketHandler {
     }
 
 
-    public void bidHandler(WebSocketSession session, Map<String, String> message, boolean bidWinnerFound) throws Exception {
+    public void bidHandler(WebSocketSession session, Map<String, String> message, boolean bidWinnerFound, int currentStage) throws Exception {
 		logIt.info("reachedBidHandler");
-		//playerBids.offerFirst(session);
 		if(!bidWinnerFound) {
 			for (Player p : playersParticipating) {
 				if (p.getSession() == session) {
@@ -1077,7 +1063,7 @@ public class SocketHandler extends TextWebSocketHandler {
 				response.addProperty("minBids", playerBid);
 				response.addProperty("maxBids", 11);
 				response.addProperty("isTest", true);
-				response.addProperty("currentStage", currentStageNow);
+				response.addProperty("currentStage", currentStage);
 				playerBids.offer(session);
 				if (playerBids.size() == 1) {
 					WebSocketSession temp = playerBids.pop();
@@ -1091,7 +1077,7 @@ public class SocketHandler extends TextWebSocketHandler {
 								newResponse.addProperty("maxBids", 11);
 								newResponse.addProperty("isTest", true);
 								newResponse.addProperty("body", "lastBidderForced");
-								newResponse.addProperty("currentStage", currentStageNow);
+								newResponse.addProperty("currentStage", currentStage);
 								temp.sendMessage(new TextMessage(newResponse.toString()));
 							} else {
 								response.addProperty("body", "lastBidder");
@@ -1103,7 +1089,6 @@ public class SocketHandler extends TextWebSocketHandler {
 					logIt.debug("no body wants to participate");
 				} else {
 					WebSocketSession temp = playerBids.pop();
-					//WebSocketSession temp = playerBids.pop();
 					temp.sendMessage(new TextMessage(response.toString()));
 				}
 			}
@@ -1120,7 +1105,7 @@ public class SocketHandler extends TextWebSocketHandler {
 				response.addProperty("minBids", playerBid);
 				response.addProperty("maxBids", 11);
 				response.addProperty("isTest", true);
-				response.addProperty("currentStage", currentStageNow);
+				response.addProperty("currentStage", currentStage);
 				if (playerBids.size() == 0) {
 					logIt.debug("no body wants to participate");
 				} else if (playerBids.size() == 1) {
@@ -1128,7 +1113,7 @@ public class SocketHandler extends TextWebSocketHandler {
 					for (Player p : playersParticipating) {
 						if (temp == p.getSession()) {
 							if (p.askedToBid) {
-								logIt.debug("player has already bid");
+								logIt.debug("player has already made a bid");
 								JsonObject newResponse = new JsonObject();
 								newResponse.addProperty(METHOD_KEY, "questInProgress");
 								newResponse.addProperty("minBids", playerBid);
@@ -1136,42 +1121,36 @@ public class SocketHandler extends TextWebSocketHandler {
 								newResponse.addProperty("isTest", true);
 								newResponse.addProperty("body", "lastBidderForced");
 								//response.addProperty("body", "lastBidder");
-								newResponse.addProperty("currentStage", currentStageNow);
+								newResponse.addProperty("currentStage", currentStage);
 								temp.sendMessage(new TextMessage(newResponse.toString()));
 							} else {
 								response.addProperty("body", "lastBidder");
-								logIt.debug("currentStageNow is "+currentStageNow);
+								logIt.debug("currentStageNow is "+currentStageNow++);
 								logIt.debug(response.toString());
 								temp.sendMessage(new TextMessage(response.toString()));
 							}
 						}
 					}
-					//playerBids.pop().sendMessage(new TextMessage(response.toString()));
 				} else {
 					playerBids.pop().sendMessage(new TextMessage(response.toString()));
 				}
 			}
 		}else {
+			updateCards();
 			for(int i=0; i<play.playerList.size(); i++){
 				if(play.playerList.get(i).getSession() == session){
 					Player temp = play.playerList.get(i);
-					logIt.debug("indexes are: "+message.get("body"));
+					//logIt.debug("indexes are: "+message.get("body"));
 					String indexes = message.get("body");
-					logIt.debug("This is indexes " + indexes);
+					//logIt.debug("This is indexes " + indexes);
 					String[] tempArr = {"[", "]"};
 					indexes = play.entryParser(indexes, tempArr);
-					logIt.debug("This is indexes now " + indexes);
+					//logIt.debug("This is indexes now " + indexes);
 //					indexes = message.get("body");
 //					indexes = indexes.substring(1,indexes.length()-1);
 					play.removeFromPlayerHand(indexes,i,false);
 					logIt.debug("playerHandSize is now "+play.playerList.get(i).cardsInHand.size());
-					updateCards(play.playerList.get(i));
-//					int currentStage = 0;
-//					try {
-//						currentStage = Integer.parseInt(message.get("currentStage"));
-//					}catch(Exception e){
-//						logIt.error("error converting int");
-//					}
+					//updateCards(play.playerList.get(i));
 					cardsUsedForQuest(session,null, message.get("currentStage"),true);
 				}
 			}
@@ -1181,38 +1160,58 @@ public class SocketHandler extends TextWebSocketHandler {
 
     public void cardsUsedForQuest(WebSocketSession session, String body, String currentStage, boolean cameFromTest) throws Exception{
 	    //TODO - implement reseting boolean for all players
-        logIt.debug("currentStage coming from server is : "+currentStage);
-        currentStageNow = 0;
-        //currenStageWithoutMinus1=0
+		//logIt.debug("**************************************************************************************************************************************************************************************************************************************************************");
+        //logIt.debug("currentStage coming from server is : "+currentStage);
+		//logIt.debug("**************************************************************************************************************************************************************************************************************************************************************");
 	    try {
-            currentStageNow = Integer.parseInt(currentStage) - 1;
-            //currenStageWithoutMinus1 = Integer.parseInt(currentStage);
+            currentStageNow = Integer.parseInt(currentStage);
         } catch (Exception e){
             e.printStackTrace();
             logIt.error("Critical error in converting to an int to currentStage");
         }
-        logIt.debug("--------------------------------------------------------------->");
-        logIt.debug("current stage now to check is "+currentStageNow);
-        logIt.debug("<---------------------------------------------------------------");
-
-            //if(entry.getKey().equals("body")){
+       	updateCards();
+        //logIt.debug("--------------------------------------------------------------->");
+        //logIt.debug("current stage now to check is "+currentStageNow);
+        //logIt.debug("<-------------------------------------------------------------->");
 		if(cameFromTest && playersParticipating.size() == 0){
 			logIt.debug("the quest is done");
+			JsonObject testing = new JsonObject();
+			testing.addProperty(METHOD_KEY, "questCompleted");
+			logIt.info("<----> all stages complete <------>");
+			for(Player p: play.playerList){
+				notify(p.getSession(), "info", "Nobody has won");
+			}
+			int cardsUsed = 0;
+			for(ArrayList<Adventure> a : cardsAndBattlePoints.keySet()){
+				cardsUsed += a.size();
+			}
+
+			int cardsToDraw = ((Quest) currentStory).GetNumStages() + cardsUsed;
+			for(int i = 0; i < cardsToDraw; i++){
+				sponsorForQuest.cardsInHand.add((Adventure) play.draw("Adventure"));
+			}
+			for(Player p:play.playerList){
+				notify(p.getSession(), "info", sponsorForQuest.getName()+ " has been awarded "+ cardsUsed);
+			}
+			playerReady(session);
+			return;
 		}
+			updateCards();
 			String indexes = "";
 			STORY_PLAYERCOUNT++;
 			if(body != null) {
 				indexes = body;
-				logIt.debug("This is indexes " + indexes);
+				//logIt.debug("This is indexes " + indexes);
 				String[] tempArr = {"[", "]"};
 				indexes = play.entryParser(indexes, tempArr);
-				logIt.debug("This is indexes now " + indexes);
+				//logIt.debug("This is indexes now " + indexes);
 			}
 			for (int i = 0; i < play.playerList.size(); i++) {
 				if (play.playerList.get(i).getSession().equals(session)) {
 					if(body != null) {
 						play.removeFromPlayerHand(indexes, i, true);
-						updateCards(play.playerList.get(i));
+						logIt.debug("size of player hand is " + play.playerList.get(i).cardsInHand.size());
+						//updateCards(play.playerList.get(i));
 					}
 					int counter = 0;
 					for (Map.Entry<ArrayList<Adventure>, Integer> entryForMap : cardsAndBattlePoints.entrySet()) {
@@ -1220,7 +1219,7 @@ public class SocketHandler extends TextWebSocketHandler {
 							logIt.info("Current stage is battle points is " + entryForMap.getValue());
 							logIt.info("the cards in the adventure arraylist is ");
 							for (Adventure card : entryForMap.getKey()) {
-								logIt.info("            card in the " + counter + " stage, is " + card.GetName());
+								//logIt.info("            card in the " + counter + " stage, is " + card.GetName());
 							}
 							logIt.debug("we are in the actual stage ");
 							Integer value = entryForMap.getValue();
@@ -1232,10 +1231,10 @@ public class SocketHandler extends TextWebSocketHandler {
 								play.playerList.get(i).setEliminated(true);
 								logIt.info("player Name is : " + play.playerList.get(i).getName() + " and their elimination status is: " + play.playerList.get(i).getEliminatedValue());
 							}
+							updateCards();
 						} else if (counter == currentStageNow && entryForMap.getValue() == -1) {
 							logIt.info("This card is a test card");
-							//TODO handle if card is test over here
-
+							updateCards();
 						}
 						counter++;
 					}
@@ -1243,7 +1242,9 @@ public class SocketHandler extends TextWebSocketHandler {
 				}
 			}
 			if (STORY_PLAYERCOUNT == playersParticipating.size()) {
+				updateCards();
 				//TODO send back all player responses and next stage info, reset storyPLayerCount
+				//stripCardsNotifier();
 				STORY_PLAYERCOUNT = 0;
 				logIt.info("all players have chosen their cards");
 				currentStageNow++;
@@ -1254,45 +1255,70 @@ public class SocketHandler extends TextWebSocketHandler {
 				for (Map.Entry<ArrayList<Adventure>, Integer> entryForMap : cardsAndBattlePoints.entrySet()) {
 					if (counter == currentStageNow) {
 						if (entryForMap.getValue() == -1) {
+							//logIt.debug("*******************************************************************************************************************************");
+							logIt.debug("this stage is a test");
 							nextCardTest = true;
 							temp = (Test) entryForMap.getKey().get(0);
+							temp.toString();
 						}
 					}
+					counter++;
 				}
-				if (currentStageNow + 1 <= cardsAndBattlePoints.size()) {
-					System.out.println("current stage to be sent back to players not eliminated : " + currentStageNow);
+				if (currentStageNow <= cardsAndBattlePoints.size()-1) {
+					//System.out.println("current stage to be sent back to players not eliminated : " + currentStageNow);
+					updateCards();
 					for (Player p : play.playerList) {
-						logIt.error("the currentStageNow is " + currentStageNow);
+						logIt.debug("the currentStageNow is " + currentStageNow);
+						//updateCards(p);
 						if (playersParticipating.contains(p)) {
 							if (p.getEliminatedValue()) {
-//								JsonObject response = new JsonObject();
-//								response.addProperty(METHOD_KEY, "playerResponseQuestStage");
-//								response.addProperty(BODY_KEY, p.getEliminatedValue());
-//								p.getSession().sendMessage(new TextMessage(response.toString()));
 								notify(p.getSession(), "error", "Unfortunately you have lost the stage and have been eliminated");
 								playersParticipating.remove(p);
+								updateCards();
 							} else {
 								JsonObject response = new JsonObject();
 								response.addProperty(METHOD_KEY, "questInProgress");
-								response.addProperty("currentStage", currentStageNow + 1);
+								response.addProperty("currentStage", currentStageNow);
 								if(nextCardTest){
 									response.addProperty("minBids", temp.GetMinBids());
 									response.addProperty("maxBids", 11);
 									response.addProperty("isTest", nextCardTest);
+									playerBids.pop().sendMessage(new TextMessage(response.toString()));
+									updateCards();
+									return;
 								} else {
 									response.addProperty("isTest", nextCardTest);
+									p.getSession().sendMessage(new TextMessage(response.toString()));
+									updateCards();
 								}
 								System.out.print("this the current elimination status " + p.getEliminatedValue());
-								p.getSession().sendMessage(new TextMessage(response.toString()));
 							}
 						}
 						p.roundBattleScore = 0;
+						if(playersParticipating.size() == 0){
+							for(Player player: play.playerList){
+								notify(player.getSession(), "info", "Nobody has won");
+							}
+							int cardsUsed = 0;
+							for(ArrayList<Adventure> a : cardsAndBattlePoints.keySet()){
+								cardsUsed += a.size();
+							}
+							int cardsToDraw = ((Quest) currentStory).GetNumStages() + cardsUsed;
+							for(int i = 0; i < cardsToDraw; i++){
+								sponsorForQuest.cardsInHand.add((Adventure) play.draw("Adventure"));
+							}
+							for(Player player:play.playerList){
+								notify(player.getSession(), "info", sponsorForQuest.getName()+ " has been awarded "+ cardsUsed);
+							}
+							updateCards();
+							playerReady(session);
+							return;
+						}
 					}
-					//next stage and who has been eliminated and what cards each player has played
 				} else {
+					updateCards();
 					JsonObject testing = new JsonObject();
 					testing.addProperty(METHOD_KEY, "questCompleted");
-					//session.sendMessage(new TextMessage(testing.toString()));
 					logIt.info("<----> all stages complete <------>");
 					if(playersParticipating.size() != 0) {
 						for (Player p : playersParticipating) {
@@ -1302,6 +1328,7 @@ public class SocketHandler extends TextWebSocketHandler {
 						}
 
 					}else{
+						updateCards();
 						for(Player p: play.playerList){
 							notify(p.getSession(), "info", "Nobody has won");
 						}
@@ -1316,41 +1343,96 @@ public class SocketHandler extends TextWebSocketHandler {
 					int cardsToDraw = ((Quest) currentStory).GetNumStages() + cardsUsed;
 					for(int i = 0; i < cardsToDraw; i++){
 						sponsorForQuest.cardsInHand.add((Adventure) play.draw("Adventure"));
+						updateCards();
 					}
 					for(Player p:play.playerList){
 						notify(p.getSession(), "info", sponsorForQuest.getName()+ " has been awarded "+ cardsUsed);
 					}
+					playerReady(session);
 				}
 			}
-
-        //}//endif
-
     }
 
-    public void updateCards(Player p) throws Exception{
-		JsonObject response = new JsonObject();
-		response.addProperty(METHOD_KEY, "updateCardsForQuest");
-		JsonArray cardsArr = new JsonArray();
-		logIt.debug("size of players cards from updateCards is "+p.cardsInHand.size());
-		for(Adventure card: p.cardsInHand){
-			JsonObject cards = new JsonObject();
-			cards.addProperty("name", card.GetName());
-			cards.addProperty("battlePoints", card.GetBattlePoints());
-			cardsArr.add(cards);
+    public void updateCards() throws Exception{
+		for(Player p:play.playerList) {
+			JsonObject response = new JsonObject();
+			response.addProperty(METHOD_KEY, "updateCardsForQuest");
+			JsonArray cardsArr = new JsonArray();
+			//logIt.debug("size of players cards from updateCards is " + p.cardsInHand.size());
+			for (Adventure card : p.cardsInHand) {
+				JsonObject cards = new JsonObject();
+				cards.addProperty("name", card.GetName());
+				cards.addProperty("battlePoints", card.GetBattlePoints());
+				cardsArr.add(cards);
+			}
+			response.add(BODY_KEY, cardsArr);
+			p.getSession().sendMessage(new TextMessage(response.toString()));
 		}
-		response.add(BODY_KEY,cardsArr);
-		p.getSession().sendMessage(new TextMessage(response.toString()));
 	}
 
 	public void notify(WebSocketSession session, String type, String message) throws IOException {
+		JsonArray body = new JsonArray();
+		for(Player p: play.playerList){
+			JsonObject temp = new JsonObject();
+			temp.addProperty("name", p.getName());
+			temp.addProperty("rank", p.getRank());
+			temp.addProperty("shields", p.getShields());
+			temp.addProperty("cardsInHand",p.cardsInHand.size());
+			body.add(temp);
+		}
 		JsonObject notification = new JsonObject();
 		notification.addProperty(METHOD_KEY, "notify");
 		notification.addProperty("type", type);
 		notification.addProperty("message", message);
+		notification.add(BODY_KEY, body);
+		logIt.debug("response is "+notification.toString());
 		session.sendMessage(new TextMessage(notification.toString()));
 	}
 
+	public int stripCardsNotifier(){
+		int counter = 0;
+		for(Player p:play.playerList){
+			if(p.cardsInHand.size() > 12){
+				counter++;
+				JsonObject response = new JsonObject();
+				response.addProperty(METHOD_KEY, "stripCards");
+				int toRemoveCards = p.cardsInHand.size() - 12;
+				response.addProperty(BODY_KEY, "Select " +toRemoveCards+ " cards to remove");
+				try {
+					p.getSession().sendMessage(new TextMessage(response.toString()));
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		logIt.debug(counter + " player(s) have more than 12 cards");
+		return counter;
+	}
 
+	public void stripCards(WebSocketSession session, Map<String, String> message){
+		stripCardsCounter++;
+		for(int i=0; i<play.playerList.size(); i++){
+			if(play.playerList.get(i).getSession() == session){
+				String indexes = message.get("body");
+				//logIt.debug("This is indexes " + indexes);
+				String[] tempArr = {"[", "]"};
+				indexes = play.entryParser(indexes, tempArr);
+				//logIt.debug("This is indexes now " + indexes);
+				play.removeFromPlayerHand(indexes,i,false);
+				logIt.info(play.playerList.get(i).getName() + " has "+ play.playerList.get(i).cardsInHand.size());
+				try {
+					updateCards();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				try {
+					playerReady(session);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
 
 //	public void updateAlliesInPlay() throws IOException {
 //		JsonObject response = new JsonObject();
