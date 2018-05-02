@@ -867,21 +867,21 @@ public class GameBoard {
 //        storyDeck.add(createTournamentCard("AT CAMELOT", 3));
 
         /*Quest*/
-//        storyDeck.add(createQuestCard("Journey through the Enchanted Forest", 3, "Evil Knight", "none"));
-//        storyDeck.add(createQuestCard("Vanquish King Arthur's Enemies", 3, "none", "none"));
-//        storyDeck.add(createQuestCard("Vanquish King Arthur's Enemies", 3, "none", "none"));
-//        storyDeck.add(createQuestCard("Repel the Saxon Raiders", 2, "All Saxons", "none"));
-//        storyDeck.add(createQuestCard("Repel the Saxon Raiders", 2, "All Saxons", "none"));
+        storyDeck.add(createQuestCard("Journey through the Enchanted Forest", 3, "Evil Knight", "none"));
+        storyDeck.add(createQuestCard("Vanquish King Arthur's Enemies", 3, "none", "none"));
+        storyDeck.add(createQuestCard("Vanquish King Arthur's Enemies", 3, "none", "none"));
+        storyDeck.add(createQuestCard("Repel the Saxon Raiders", 2, "All Saxons", "none"));
+        storyDeck.add(createQuestCard("Repel the Saxon Raiders", 2, "All Saxons", "none"));
 
-//        storyDeck.add(createQuestCard("Search for the Questing Beast", 4, "none", "King Pellinore"));
-//        storyDeck.add(createQuestCard("Defend the Queens Honor", 4, "All", "Sir Lancelot"));
-//        storyDeck.add(createQuestCard("Rescue the Fair Maiden", 3, "Black Knight", "none"));
-//        storyDeck.add(createQuestCard("Search for the Holy Grail", 5, "All", "Sir Percival"));
-//        storyDeck.add(createQuestCard("Test of the Green Knight", 4, "Green Knight", "Sir Gawain"));
+        storyDeck.add(createQuestCard("Search for the Questing Beast", 4, "none", "King Pellinore"));
+        storyDeck.add(createQuestCard("Defend the Queens Honor", 4, "All", "Sir Lancelot"));
+        storyDeck.add(createQuestCard("Rescue the Fair Maiden", 3, "Black Knight", "none"));
+        storyDeck.add(createQuestCard("Search for the Holy Grail", 5, "All", "Sir Percival"));
+        storyDeck.add(createQuestCard("Test of the Green Knight", 4, "Green Knight", "Sir Gawain"));
 
 
         //storyDeck.add(createQuestCard("Slay the Dragon", 3, "Dragon", "none"));
-        storyDeck.add(createTournamentCard("AT YORK", 0));
+        //storyDeck.add(createTournamentCard("AT YORK", 0));
         //storyDeck.add(createEventCard("Prosperity Throughout the Realm", 0, 2, false, 0, 0, Event.playersTargeted.get(1), "All players may immeadiately draw two Adventure Cards"));
         //storyDeck.add(createEventCard("Chivalrous Deed", 3, 0, false, 0, 0, Event.playersTargeted.get(0), "Player(s) with both lowest rank and least amount of shields, receives 3 shields"));
         //storyDeck.add(createQuestCard("Boar Hunt", 2, "Boar", "none"));

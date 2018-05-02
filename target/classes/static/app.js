@@ -293,7 +293,7 @@ function startTheGame(message){
         $("#main-content").empty();
         $("#main-content").append(
             "<div align='left'>" +
-                "<table id = 'setupScreen' class='table table-striped'> " +
+                "<table id = 'setupScreen' class='table'> " +
                     "<thead> " +
                         "<tr>" +
                             "<th scope='col'></th>" +
